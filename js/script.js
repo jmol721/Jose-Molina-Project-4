@@ -26,7 +26,6 @@ function incorrectPenaltyTimer (penalty) {
 }
 
 
-
 //Quiz component
 var penalty = 2;
 
@@ -36,7 +35,44 @@ var startQuizBtn = document.getElementById("start-button");
 startQuizBtn.onclick = countdownTimer;
 
 //Test button
-var wrongQuestion = document.getElementById("penalty-button");
+// var wrongQuestion = document.getElementById("penalty-button");
 
 
-wrongQuestion.onclick = () => incorrectPenaltyTimer(penalty);
+// wrongQuestion.onclick = () => incorrectPenaltyTimer(penalty);
+
+
+// High Score component
+var highScoreListCounter = 1;
+var highScoreList = document.querySelector("#high-score-list");
+
+var createHighScoreEl = function(highScoreObject) {
+    var highScoreListEl = document.createElement("li");
+    highScoreListEl.className = "high-score-element";
+    highScoreListEl.setAttribute("high-score-id", highScoreListCounter);
+    highScoreListEl.textContent = `${highScoreListCounter}. ${highScoreObject.name} - ${highScoreObject.score}`;
+
+    highScoreList.appendChild(highScoreListEl);
+}
+
+// Testing adding high score
+// var mockHighScore = {name: 'jose', score: 2};
+// createHighScoreEl(mockHighScore);
+
+
+// funciton for hiding quiz container
+var hideQuizContainer = function() {
+    var quizContainerEl = document.getElementById('main-quiz-container-id');
+    quizContainerEl.className = 'hide';
+}
+
+// fucntion for displaying high score
+var displayHighScore = function() {
+    hideQuizContainer();
+    var viewHighScoreEl = document.getElementById("view-high-score-id");
+    viewHighScoreEl.className = 'show';
+    console.log('hello');
+}
+
+var highScoreLink = document.getElementById("view-highscore-switch");
+
+highScoreLink.onclick = displayHighScore;
