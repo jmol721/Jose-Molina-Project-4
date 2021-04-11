@@ -10,10 +10,6 @@
 .show {
     display: '';
 }
-/* .main {
-    display: flex;
-    justify-content: space-between;
-} */
 
 .timer0 {
     color: red;
@@ -94,4 +90,25 @@
     border: none;
     padding: 10px;
     font-size: larger;
+}
+
+.question-container {
+    font-size: 25px;
+}
+
+.question-container button {
+    border-radius: 5px;
+    background-color: #463081;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: larger;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+#previous-answer-results {
+    margin-top: 35px;
+    border-top: black 1px solid;
 }

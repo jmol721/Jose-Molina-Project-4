@@ -32,10 +32,8 @@ var penalty = 2;
 // attaching quiz button to timer function
 var startQuizBtn = document.getElementById("start-button");
 
-startQuizBtn.onclick = countdownTimer;
 
-
-// funciton for hiding and showing quiz container
+// funciton for hiding and showing quiz container when clicking high score
 var hideQuizContainer = function() {
     var quizContainerEl = document.getElementById('main-quiz-container-id');
     quizContainerEl.className = 'hide';
@@ -116,3 +114,116 @@ createHighScoreEl(mockHighScore);
 
 var mockHighScore2 = {name: 'poop', score: 100};
 createHighScoreEl(mockHighScore2);
+
+// Quiz
+var questions = [
+    {
+        question: "Commonly used data types DO not include:",
+        answers: {
+            1: "1. strings",
+            2: "2. booleans",
+            3: "3. alerts",
+            4: "4. numbers"
+        },
+        correctAnswer: "3"
+    },
+    {
+        question: "The condition in an if / else statement is enclosed with ___.",
+        answers: {
+            1: "1. quotes",
+            2: "2. curly brackets",
+            3: "3. parenthesis",
+            4: "4. square brackets"
+        },
+        correctAnswer: "3"
+    },
+    {
+        question: "Arrays in JavaScript can be used to store __.",
+        answers: {
+            1: "1. numbers and strings",
+            2: "2. other arrays",
+            3: "3. booleans",
+            4: "4. all of the above"
+        },
+        correctAnswer: "4"
+    },
+    {
+        question: "String values must be enclosed within __ when being assigned to variables.",
+        answers: {
+            1: "1. commas",
+            2: "2. curly brackets",
+            3: "3. quotes",
+            4: "4. parenthesis"
+        },
+        correctAnswer: "3"
+    },
+    {
+        question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+        answers: {
+            1: "1. JavaScript",
+            2: "2. terminal/bash",
+            3: "3. for loops",
+            4: "4. console.log"
+        },
+        correctAnswer: "4"
+    }
+];
+var currentQuestionIndex = 0;
+
+var updateQuestionContainerWithQuestion = function(question) {
+    var questionsPage = document.getElementById("question-container-id");
+    questionsPage.className = "question-container";
+    document.getElementById("quiz-question").textContent = question.question;
+    document.getElementById("answer-1").textContent = question.answers[1];
+    document.getElementById("answer-2").textContent = question.answers[2];
+    document.getElementById("answer-3").textContent = question.answers[3];
+    document.getElementById("answer-4").textContent = question.answers[4];
+}
+
+//function for showing and hiding start quiz page
+var hideMainQuizPage = function() {
+    var startPage = document.getElementById("start-quiz-container");
+    startPage.className = "hide";
+};
+
+//start quiz function
+var startQuiz = function() {
+    hideMainQuizPage();
+    updateQuestionContainerWithQuestion(questions[currentQuestionIndex]);
+    countdownTimer();
+}
+
+startQuizBtn.onclick = startQuiz;
+
+
+var verifyAnswer = function(answerSelectedId) {
+    var correctAnswer = questions[currentQuestionIndex].correctAnswer;
+    if (answerSelectedId === correctAnswer) {
+        return "Correct!";
+    } else {
+        return "Wrong!";
+    }
+}
+
+// function for answering question with selected answer id as an argument
+var answerSelect = function(clickEvent) {
+    var answerSelectedId = clickEvent.target.value;
+    var result = verifyAnswer(answerSelectedId);
+
+    currentQuestionIndex ++;
+    updateQuestionContainerWithQuestion(questions[currentQuestionIndex]);
+    document.getElementById("previous-answer-results").textContent = result;
+}
+
+// set answer button onclicks 
+var answer1 = document.getElementById("answer-1");
+answer1.onclick = answerSelect;
+
+var answer2 = document.getElementById("answer-2");
+answer2.onclick = answerSelect;
+
+var answer3 = document.getElementById("answer-3");
+answer3.onclick = answerSelect;
+
+var answer4 = document.getElementById("answer-4");
+answer4.onclick = answerSelect;
