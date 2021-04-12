@@ -1,5 +1,5 @@
 // Timer componet
-var timeLeft = 15;
+var timeLeft = 0;
 var timeEl = document.getElementById('seconds');
 timeEl.textContent = timeLeft;
 
@@ -10,12 +10,12 @@ function countdownTimer () {
         if (timeLeft >= 0) {
             timeEl.textContent = timeLeft
             timeLeft--;
-            console.log("timeLeft :", timeLeft);
+            // console.log("timeLeft :", timeLeft);
         }  else {
             clearInterval(timerInterval);
             timeEl.textContent = 0;
             document.getElementById("timer").setAttribute("class", "timer0");
-            console.log("timeLeft :", timeLeft);
+            // console.log("timeLeft :", timeLeft);
         }
     }, 1000);
 }
@@ -169,6 +169,7 @@ var questions = [
     }
 ];
 var currentQuestionIndex = 0;
+var score = 0;
 
 var updateQuestionContainerWithQuestion = function(question) {
     var questionsPage = document.getElementById("question-container-id");
@@ -188,6 +189,9 @@ var hideMainQuizPage = function() {
 
 //start quiz function
 var startQuiz = function() {
+    score = 0;
+    timeLeft = 60;
+
     hideMainQuizPage();
     updateQuestionContainerWithQuestion(questions[currentQuestionIndex]);
     countdownTimer();
@@ -199,31 +203,39 @@ startQuizBtn.onclick = startQuiz;
 var verifyAnswer = function(answerSelectedId) {
     var correctAnswer = questions[currentQuestionIndex].correctAnswer;
     if (answerSelectedId === correctAnswer) {
+        score += 5;
         return "Correct!";
     } else {
+        incorrectPenaltyTimer(1);
         return "Wrong!";
     }
 }
 
 // function for answering question with selected answer id as an argument
-var answerSelect = function(clickEvent) {
+var answerSelected = function(clickEvent) {
     var answerSelectedId = clickEvent.target.value;
     var result = verifyAnswer(answerSelectedId);
-
-    currentQuestionIndex ++;
-    updateQuestionContainerWithQuestion(questions[currentQuestionIndex]);
     document.getElementById("previous-answer-results").textContent = result;
+    if (currentQuestionIndex >= questions.length - 1 || timeLeft <= 0) {
+       // TODO - final score component 
+       console.log('all done');
+    } else {
+        currentQuestionIndex ++;
+        updateQuestionContainerWithQuestion(questions[currentQuestionIndex]);
+    }
+
+    console.log('currentQuestionIndex :' , currentQuestionIndex);
 }
 
 // set answer button onclicks 
 var answer1 = document.getElementById("answer-1");
-answer1.onclick = answerSelect;
+answer1.onclick = answerSelected;
 
 var answer2 = document.getElementById("answer-2");
-answer2.onclick = answerSelect;
+answer2.onclick = answerSelected;
 
 var answer3 = document.getElementById("answer-3");
-answer3.onclick = answerSelect;
+answer3.onclick = answerSelected;
 
 var answer4 = document.getElementById("answer-4");
-answer4.onclick = answerSelect;
+answer4.onclick = answerSelected;
