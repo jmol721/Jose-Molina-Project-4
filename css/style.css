@@ -15,6 +15,10 @@
     color: red;
 }
 
+.reset-timer {
+    color: black;
+}
+
 .timer-container {
     text-align: right;
     padding: 1.5%;
@@ -111,4 +115,14 @@
 #previous-answer-results {
     margin-top: 35px;
     border-top: black 1px solid;
+}
+
+.final-page {
+    color: black;
+    font-size: 35px;
+    text-align: left;
+}
+
+.initials {
+
 }
