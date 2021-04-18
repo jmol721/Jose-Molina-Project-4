@@ -46,7 +46,8 @@ var highScoreLink = document.getElementById("view-highscore-switch");
 var highScoreListCounter = 1;
 var highScoreParentList = document.querySelector("#high-score-list");
 // create initial high score list to an empty list
-var highScoreList = [];
+
+localStorage.setItem("Score", JSON.stringify([]));
 
 var goBackButton = document.getElementById("go-back");
 var clearHighScoreButton = document.getElementById("clear-high-scores");
@@ -79,8 +80,13 @@ var createHighScoreEl = function(highScoreObject) {
 
     highScoreParentList.appendChild(highScoreListEl);
 
+
+    var highScoreList = JSON.parse(localStorage.getItem("Score"));
+
     highScoreObject.id = highScoreListCounter;
     highScoreList.push(highScoreObject);
+
+    localStorage.setItem("Score", JSON.stringify(highScoreList));
 
     highScoreListCounter++;
 }
@@ -88,6 +94,8 @@ var createHighScoreEl = function(highScoreObject) {
 // function to clear high scores
 var clearHighScore = function() {
     // loop through highScoreList and remove child elements from parent element
+    console.log(highScoreList);
+    var highScoreList = JSON.parse(localStorage.getItem("Score"));
     for (var i = 0; i < highScoreList.length; i++) {
         var highScore = highScoreList[i];
         var idOfElement = highScore.id;
@@ -97,6 +105,8 @@ var clearHighScore = function() {
     }
     // reset to empty list
     highScoreList = [];
+    localStorage.setItem("Score", JSON.stringify(highScoreList));
+    highScoreListCounter = 1;
 }
 
 clearHighScoreButton.onclick = clearHighScore;
@@ -178,7 +188,7 @@ var hideMainQuizPage = function() {
 
 var resetQuizValues = function() {
     score = 0;
-    timeLeft = 10;
+    timeLeft = 60;
     currentQuestionIndex = 0;
     resetQuiz = false;
     document.getElementById("timer").setAttribute("class", "reset-timer");
